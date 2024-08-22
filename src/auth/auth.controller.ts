@@ -8,12 +8,12 @@ import { AuthGuard } from './auth.guard';
 export class AuthController {
     constructor(private authService: AuthService) { }
 
-    
+
 
     @Post('/login')
-    async login(@Res({passthrough: true}) response: Response,@Body() body: LoginUserDto) {
+    async login(@Res({ passthrough: true }) response: Response, @Body() body: LoginUserDto) {
         const { access_token, user } = await this.authService.login(body);
-        response.cookie('token', access_token);
+        response.cookie('token', access_token, { sameSite: 'none', secure: true, httpOnly: false });
 
         return {
             status: 'authorized',
@@ -23,12 +23,12 @@ export class AuthController {
     }
 
     @Post('/logout')
-    async logout(@Res({passthrough: true}) response: Response) {
+    async logout(@Res({ passthrough: true }) response: Response) {
         this.authService.logout(response)
     }
 
     @UseGuards(AuthGuard)
-    @Get('/profile') 
+    @Get('/profile')
     profile(@Request() req: any) {
         return this.authService.profile(req)
     }

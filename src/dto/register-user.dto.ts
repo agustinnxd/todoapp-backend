@@ -5,7 +5,7 @@ export class RegisterUserDto {
     
     @IsString()
     @IsNotEmpty()
-    @Length(3, 15)
+    @Length(4, 15)
     username: string;
 
     @IsEmail()
@@ -14,6 +14,6 @@ export class RegisterUserDto {
 
     @IsString()
     @IsNotEmpty()
-    @Length(4)
+    @Length(6)
     password: string
 }

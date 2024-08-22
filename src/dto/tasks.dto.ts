@@ -5,7 +5,7 @@ export class CreateTaskDto {
 
     @IsString()
     @IsNotEmpty()
-    @Length(3)
+    @Length(3, 21)
     title: string
 
     @IsOptional()

@@ -3,7 +3,7 @@ import * as cookieParser from 'cookie-parser';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { BadRequestException, HttpException, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,10 +17,12 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document)
 
-  app.enableCors();
+  app.enableCors({ origin: 'http://localhost:5173', credentials: true});
   app.setGlobalPrefix('api');
   app.use(cookieParser());
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({ stopAtFirstError: true })
+  );
   await app.listen(3000);
 }
 bootstrap();

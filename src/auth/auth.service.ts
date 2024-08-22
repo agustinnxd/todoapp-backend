@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { HttpException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { LoginUserDto } from 'src/dto/login-user.dto';
@@ -13,21 +13,21 @@ import { Response } from 'express';
 @Injectable()
 export class AuthService {
     constructor(
-        @InjectModel(User.name) private userModel:Model<User>,
+        @InjectModel(User.name) private userModel: Model<User>,
         private jwtService: JwtService
-    ) {}
+    ) { }
 
     async login(body: LoginUserDto) {
-        const user = await this.userModel.findOne({email: body.email})
+        const user = await this.userModel.findOne({ email: body.email })
 
-        if(!user) {
-            throw new UnauthorizedException('wrong email or password / email')
+        if (!user) {
+            throw new HttpException({ error: 'Bad Request', message: ['Wrong Password or Email'] }, 400)
         }
 
         const isMatch = await bcrypt.compare(body.password, user.password)
 
-        if(!isMatch) {
-            throw new UnauthorizedException('wrong email or password / password')
+        if (!isMatch) {
+            throw new HttpException({ error: 'Bad Request', message: ['Wrong Password or Email'] }, 400)
         }
 
         return {
@@ -45,7 +45,7 @@ export class AuthService {
     async profile(req: any) {
         const user = await this.userModel.findById(req.user.id)
 
-        if(!user) {
+        if (!user) {
             throw new NotFoundException('User not found')
         }
 
