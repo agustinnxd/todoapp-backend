@@ -1,7 +1,7 @@
 import { HttpException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { LoginUserDto } from 'src/dto/login-user.dto';
+import { LoginUserDto } from 'src/dto/users.dto';
 import { User } from 'src/schemas/user.schema';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';

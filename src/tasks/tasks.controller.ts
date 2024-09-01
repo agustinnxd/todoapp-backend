@@ -5,7 +5,7 @@ import { CreateTaskDto, UpdateTaskDto } from 'src/dto/tasks.dto';
 
 @Controller('tasks')
 export class TasksController {
-    constructor(private tasksService: TasksService) {}
+    constructor(private tasksService: TasksService) { }
 
     @UseGuards(AuthGuard)
     @Post()
@@ -27,13 +27,13 @@ export class TasksController {
 
     @UseGuards(AuthGuard)
     @Put(':id')
-    updateTask(@Param('id') id:string, @Body() task:UpdateTaskDto) {
+    updateTask(@Param('id') id: string, @Body() task: UpdateTaskDto) {
         return this.tasksService.updateTask(id, task)
     }
 
     @UseGuards(AuthGuard)
     @Delete(':id')
-    deleteTask(@Param('id') id:string) {
+    deleteTask(@Param('id') id: string) {
         return this.tasksService.deleteTask(id)
     }
 }

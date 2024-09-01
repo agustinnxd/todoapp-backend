@@ -8,11 +8,11 @@ import { Task } from 'src/schemas/task.schema';
 export class TasksService {
     constructor(
         @InjectModel(Task.name) private taskModel: Model<Task>
-    ) {}
+    ) { }
 
     createTask(task: CreateTaskDto, req: any) {
-        
-        return this.taskModel.create({...task, user: req.user.id})
+
+        return this.taskModel.create({ ...task, user: req.user.id })
     }
 
     getTasks(req: any) {
@@ -22,24 +22,24 @@ export class TasksService {
     }
 
     getTaskById(id: string) {
-        const user = this.taskModel.findById(id)
-        if(!user) {
-            throw new NotFoundException('User not found')
+        const task = this.taskModel.findById(id)
+        if (!task) {
+            throw new NotFoundException('Task not found')
         }
-        return user
+        return task
     }
 
-    updateTask(id:string, task: UpdateTaskDto) {
-        const user = this.taskModel.findById(id)
-        if(!user) {
-            throw new NotFoundException('User not found')
+    updateTask(id: string, body: UpdateTaskDto) {
+        const task = this.taskModel.findById(id)
+        if (!task) {
+            throw new NotFoundException('Task not found')
         }
-        return this.taskModel.findByIdAndUpdate(id,task, {new: true})
+        return this.taskModel.findByIdAndUpdate(id, body, { new: true })
     }
 
-    deleteTask(id:string) {
-        const user = this.taskModel.findById(id)
-        if(!user) {
+    deleteTask(id: string) {
+        const task = this.taskModel.findById(id)
+        if (!task) {
             throw new NotFoundException('User not found')
         }
         return this.taskModel.findByIdAndDelete(id)
