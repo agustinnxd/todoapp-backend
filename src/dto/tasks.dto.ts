@@ -20,7 +20,7 @@ export class CreateTaskDto {
 export class UpdateTaskDto {
     @IsString()
     @IsOptional()
-    @Length(3)
+    @Length(3,21)
     title?: string
 
     @IsOptional()

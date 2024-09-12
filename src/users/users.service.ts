@@ -1,4 +1,4 @@
-import { BadRequestException, HttpException, Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
@@ -25,16 +25,6 @@ export class UsersService {
             access_token: await this.jwtService.signAsync({ id: (await newUser)._id })
         }
 
-    }
-
-    async getUser (id:string) {
-        const user = this.userModel.findById(id);
-
-        if (!user) {
-            throw new NotFoundException('User not found')
-        }
-
-        return user
     }
 
     async updateUser(id: string, body: UpdateUserDto) {

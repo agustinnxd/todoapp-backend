@@ -7,7 +7,6 @@ import { User } from "./user.schema";
 })
 export class Task {
     @Prop({
-        unique: true,
         trim: true,
         required: true
     })
